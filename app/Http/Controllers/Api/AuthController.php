@@ -23,17 +23,17 @@ class AuthController extends Controller
         
         $user = User::where('email', request()->email)->first();
         
-        /* if (! $user || ! Hash::check(request()->password, $user->password)) {
+        if (! $user || ! Hash::check(request()->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
-        } */
+        }
 
-        if (!Auth::attempt(request()->only('email', 'password'))) {
+        /* if (!Auth::attempt(request()->only('email', 'password'))) {
             return response()->json([
               'message' => 'Unauthorized'
             ], 401);
-        }      
+        }   */    
 
         return response()->json([
             'token' => $user->createToken(request()->device_name)->plainTextToken
